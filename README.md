@@ -1,2 +1,2 @@
 # biketheft_berlin
-Data Engineering Project for the Data Engineering Zoomcamp 2023. 
+Batch pipeline to process and visualise daily published data on bike thefts in berlin. Data Engineer
