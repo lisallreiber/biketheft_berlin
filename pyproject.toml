@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "biketheft-berlin"
+version = "0.1.0"
+description = ""
+authors = ["lisallreiber <lisallreiber@gmail.com>"]
+readme = "README.md"
+packages = [{include = "biketheft_berlin"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^1.5.3"
+prefect = "^2.8.5"
+jupyter = "^1.0.0"
+ipykernel = "^6.21.3"
+matplotlib = "^3.7.1"
+datetime = "^5.1"
+prefect-gcp = "^0.3.0"
+pyarrow = "^11.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pandas = "^1.5.3"
+prefect = "^2.8.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
