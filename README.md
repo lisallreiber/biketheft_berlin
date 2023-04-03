@@ -3,7 +3,7 @@
 > "Your bicylce just needs one more lock than the one next to it
 
 
-There used to be a time when the average lifetime of my bicycles in Berlin was about one year - until they were stolen. This changed when I got a second lock because my local bicycle dealer suggested to get a second lock from another brand. Coincidence?
+There used to be a time when the average lifetime of my bicycles in Berlin was about one year - until they were stolen. This changed when my local bicycle dealer suggested to get a second lock from another brand. Coincidence?
 
 That's where my project comes in - to learn more about the key numbers and trends of bike theft in Berlin, I am developing a fully automated batch process that ingests [daily berlin bicycle theft data](https://daten.berlin.de/datensaetze/fahrraddiebstahl-berlin) reported by the police in Berlin, transforms it with the power of python and dbt, and stores it in a data warehouse (BigQuery). But why stop there? Using the power of Google Data Looker, the data is visualized, providing insights into the patterns and trends of bicycle theft in the city. Ready to take a ride with me and see how this all comes together? Let's go!
 
