@@ -3,7 +3,7 @@
 ###
 name: Berlin Bike Theft ETL
 description: Main ETL Function
-version: c4d70fa0eaff9dd6ec209f7409ca18c3
+version: 0370a3d0f88cb0d1cd638b288e761a59
 # The work queue that will handle this deployment's runs
 work_queue_name: default
 work_pool_name: null
@@ -40,4 +40,4 @@ parameter_openapi_schema:
   properties: {}
   required: null
   definitions: null
-timestamp: '2023-04-04T15:16:11.749333+00:00'
+timestamp: '2023-04-10T13:48:29.057049+00:00'
