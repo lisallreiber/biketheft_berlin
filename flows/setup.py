@@ -40,7 +40,7 @@ def load_archive(archive_path: Path) -> None:
 def etl_local_to_gcs():
     """Main ETL Flow to load data into BigQuery"""
     # define local geo path
-    geo_path = Path("data/seeds/LOR_Planung_Berlin_Geo")
+    geo_path = Path("data/mappings")
 
     if geo_path.is_dir():
         load_geo(geo_path)
