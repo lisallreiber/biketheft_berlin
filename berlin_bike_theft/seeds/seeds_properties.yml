@@ -1,0 +1,6 @@
+version: 2
+
+seeds: 
+  - name: berlin_bezirke
+    description: >
+      Berlin LOR district ID's with their Names

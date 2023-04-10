@@ -28,3 +28,28 @@ That's where my project comes in - to learn more about the key numbers and trend
 - **Visualization**: (TODO: What kind of insights am I hoping to gain from visualizing the data in Google Data Looker? Providing some examples of the types of visualizations I am creating -> how they will help to inform decision-making?)
 
 - **Reproducibility**: (TODO: Describe how the project is reproducible and easy to run. Write specific instructions or prerequisites that users will need to follow to get the project up and running on their own.)
+
+
+## Quick-Start
+
+1. Web to Cloud Storage
+   
+```bash
+# setup folders
+MY_BUCKET="dtc_data_lake_dtc-de-375708"
+MY_FOLDER="berlin_bike_theft"
+MY_SUBFOLDERS="data/raw"
+```
+
+2. Cloud Storage to BigQuery
+```bash
+
+```
+
+3. Prefect Deployments
+
+Build the prefect ETL Deployment with
+
+```bash
+poetry run prefect deployment build flows/extract_web-to-gcs.py:etl_web_to_gcs -n "Berlin Bike Theft ETL" --cron "0 12 * * *" -a
+```
