@@ -4,20 +4,22 @@ jobs:
   run-script:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Cache dependencies
-      uses: actions/cache@v2
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
       with:
-        path: ~/.cache/pypoetry/virtualenvs
-        key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    - name: Set up Python
-      uses: actions/setup-python@v2
+        python-version: 3.9
+    - name: Set up Poetry
+      uses: abatilo/actions-poetry@v2
       with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        pip install poetry
-        poetry install
-    - name: Run script
-      run: poetry run python flows/extract_web-to-gcs.py
+        poetry-version: "1.1.15"
+    - name: Install poetry dependencies
+      run: poetry install
+    #- name: Prefect Cloud login
+    #  run: |
+    #    poetry run prefect config set PREFECT_API_KEY=${{secrets.PREFECT_API_KEY}} 
+    #    poetry run prefect cloud workspace set --workspace "${{secrets.PREFECT_WORKSPACE}}"
+    #- name: Run extract web to GCS
+    #  run: poetry run python flows/extract_web-to-gcs.py
+
+
