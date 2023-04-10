@@ -73,6 +73,10 @@ def etl_gcs_to_bq(toggle_setup: bool):
         archived_reports_df = transform(archived_reports_path)
         write_bq(archived_reports_df, "reported_incidents_archived")
 
+        mappings_path = Path("data/mappings/berlin_lor_geo.csv")
+        mappings_df = pd.read_csv(mappings_path, sep=";")
+        write_bq(mappings_df, "mapping_berlin_lor")
+
     date = pd.to_datetime('today').date()
     daily_report_path = f"data/raw/daily/{date}_berlin-bike-theft.csv"
     
@@ -81,7 +85,7 @@ def etl_gcs_to_bq(toggle_setup: bool):
     write_bq(reports_df, "reported_incidents_daily")
 
 if __name__ == "__main__":
-    etl_gcs_to_bq(toggle_setup = True)
+    etl_gcs_to_bq(toggle_setup = False)
 
 
     
