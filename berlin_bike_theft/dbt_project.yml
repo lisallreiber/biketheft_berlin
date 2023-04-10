@@ -38,21 +38,10 @@ models:
       materialized: view
     core:
       materialized: table
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
 
 seeds: 
     berlin_bike_theft:
-        berlin_lor_geo:
-            column_types:
-                object_id: numeric
-                bezirk_id: numeric
-                pgr_id: numeric
-                pgr_name: str
-                bzr_id: numeric
-                bzr_name: str
-                plr_id: numeric
-                plr_name: str
-                plr_geometry: str
-                stand: str
+        berlin_bezirke:
+            +column_types:
+                bez_id: numeric
+                bezirk_name: string

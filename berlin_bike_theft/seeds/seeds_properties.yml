@@ -1,6 +1,6 @@
 version: 2
 
 seeds: 
-  - name: berlin_lor_geo
+  - name: berlin_bezirke
     description: >
-      Berlin LOR Zones with Polygon Coordinates
+      Berlin LOR district ID's with their Names
