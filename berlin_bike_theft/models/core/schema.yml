@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: fact_theft_reports
+    description: >
+      Reported bike thefts corresponding to both archived and daily updated data. 
+  # - name: dm_monthly_lor_damage
+  #   description: >
+  #     Aggregated table of all reported thefts corresponding to both archived and daily updated theft reportd per lor-location zone and month.
+  #     The table contains monthly sums of the reported amount of damage to calculate the monthly damage caused by the thefts. The table contains also monthly indicators like number of reported thefts, minimum and maximum price of stoled bike.  
+
+
+# metrics:
+#   - name: average_distance
+#     label: Average Distance
+#     model: ref('fact_trips')
+#     description: "The average trip distance"
+
+#     calculation_method: average
+#     expression: trip_distance
+
+#     timestamp: pickup_datetime
+#     time_grains: [month, quarter, year]
+
+#     tags:
+#     - piperider
