@@ -52,11 +52,11 @@ jobs:
     - run: poetry install --no-interaction --no-root
       if: steps.cache-deps.outputs.cache-hit != 'true'
 
-    #- name: Prefect Cloud login
-    #  run: |
-    #    poetry run prefect config set PREFECT_API_KEY=${{secrets.PREFECT_API_KEY}} 
-    #    poetry run prefect cloud workspace set --workspace "${{secrets.PREFECT_WORKSPACE}}"
-    #- name: Run extract web to GCS
-    #  run: poetry run python flows/extract_web-to-gcs.py
+    - name: Prefect Cloud login
+      run: |
+        poetry run prefect config set PREFECT_API_KEY=${{secrets.PREFECT_API_KEY}} 
+        poetry run prefect cloud workspace set --workspace "${{secrets.PREFECT_WORKSPACE}}"
+    - name: Run extract web to GCS
+      run: poetry run python flows/extract_web-to-gcs.py
 
 
