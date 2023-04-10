@@ -16,27 +16,8 @@ def fetch(dataset_url: str) -> pd.DataFrame:
     )
     return df
 
-@task(name="clean data",log_prints=True)
-def clean(df: pd.DataFrame) -> pd.DataFrame:
-    """Fix dtype issues"""
-    # combine TATZEIT_DATUM and TATZEIT_STUNDE to create TATZEIT
-    df['TATZEIT_ANFANG'] = df['TATZEIT_ANFANG_DATUM'] + pd.to_timedelta(df['TATZEIT_ANFANG_STUNDE'], unit='h')
-    df['TATZEIT_ENDE'] = df['TATZEIT_ENDE_DATUM'] + pd.to_timedelta(df['TATZEIT_ENDE_STUNDE'], unit='h')
-
-    # extract hour from TATZEIT_ANFANG and assign it to TATZEIT_ANFANG_STUNDE
-    df['TATZEIT_ANFANG_STUNDE'] = df['TATZEIT_ANFANG'].dt.hour
-    df['TATZEIT_ENDE_STUNDE'] = df['TATZEIT_ENDE'].dt.hour
-
-    # generate tatzeit dauer
-    df['TATZEIT_DAUER'] = (df['TATZEIT_ENDE'] - df['TATZEIT_ANFANG']) / pd.Timedelta(hours=1)
-
-    print(df.head(2))
-    print(f"columns: {df.dtypes}")
-    print(f"rows: {len(df)}")
-    return df
-
 @task(name="write local",log_prints=True)
-def write_local(df: pd.DataFrame, local_path: str) -> Path:
+def write_local(df: pd.DataFrame, local_path: str) -> None:
     #"""Write DataFrame to local parquet file"""
     # local_prefix = Path(f"data/pq")
     # local_path = f"{local_prefix}/{file_name}.parquet"
@@ -48,7 +29,7 @@ def write_local(df: pd.DataFrame, local_path: str) -> Path:
 def write_gcs(path: Path) -> None:
     """Write local csv file to GCS"""
     gcp_bucket = GcsBucket.load("de-zoomcamp-gcs")
-    gcp_bucket.upload_from_path(from_path=path)
+    gcp_bucket.upload_from_path(from_path=path, to_path=path)
     return
 
 @flow(name="Main ETL", log_prints=True)
@@ -60,7 +41,7 @@ def etl_web_to_gcs() -> None:
     today = pd.to_datetime('today').date()
     file_name = f"{today}_berlin-bike-theft"
     
-    local_prefix = Path(f"data/raw")
+    local_prefix = Path(f"data/raw/daily")
     local_path = f"{local_prefix}/{file_name}.csv"
         
     # Get the file with the most recent date
@@ -71,14 +52,13 @@ def etl_web_to_gcs() -> None:
 
     if os.path.exists(local_path):
         print(f"... skipping download, processed file exists {local_path}")
-        df_clean = pd.read_csv(local_path)
+        df_raw = pd.read_csv(local_path)
     else :
         print(f"... downloading {dataset_url} for date {today}")
         # create local path if it does not exist
-        local_path.parent.mkdir(parents=True, exist_ok=True)
+        Path(local_path).parent.mkdir(parents=True, exist_ok=True)
         df_raw = fetch(dataset_url)
-        df_clean = clean(df_raw)    
-        write_local(df_clean, local_path)
+        write_local(df_raw, local_path)
         print(f"... to location: local {local_path}")
 
     write_gcs(local_path)
