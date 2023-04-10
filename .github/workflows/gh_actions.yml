@@ -1,7 +1,9 @@
 on:
-  schedule:
-    - cron: '0 12 * * *'
-
+  # schedule:
+  #  - cron: '0 12 * * *'
+  push:
+    branches:
+    - dev
 jobs:
   run-script:
     runs-on: ubuntu-latest
