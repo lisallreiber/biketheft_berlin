@@ -16,6 +16,9 @@ matplotlib = "^3.7.1"
 datetime = "^5.1"
 prefect-gcp = {extras = ["cloud-storage"], version = "^0.3.0"}
 pyarrow = "^11.0.0"
+pandas-gbq = "^0.19.1"
+dbt-core = "^1.4.5"
+dbt-bigquery = "^1.4.3"
 
 [tool.poetry.group.dev.dependencies]
 pandas = "^1.5.3"
