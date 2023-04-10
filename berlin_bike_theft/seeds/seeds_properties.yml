@@ -1,0 +1,6 @@
+version: 2
+
+seeds: 
+  - name: berlin_lor_geo
+    description: >
+      Berlin LOR Zones with Polygon Coordinates
