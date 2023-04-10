@@ -43,13 +43,6 @@ def transform(data_path: Path) -> pd.DataFrame:
     print(f"rows: {len(df)}")
     return df
 
-# @task(name="Transform archived data from GSC")
-# def transform(path: Path) -> pd.DataFrame:
-#     """Transform data from GCS"""
-#     df = pd.read_csv(path, encoding='latin-1')
-
-#     return df
-
 @task(name="Write to BigQuery", log_prints=True)
 def write_bq(df: pd.DataFrame, table_name: str):
     """Write data to BigQuery"""
