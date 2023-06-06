@@ -18,11 +18,11 @@ def fetch(dataset_url: str) -> pd.DataFrame:
 
 @task(name="write local",log_prints=True)
 def write_local(df: pd.DataFrame, local_path: str) -> None:
-    #"""Write DataFrame to local parquet file"""
-    # local_prefix = Path(f"data/pq")
-    # local_path = f"{local_prefix}/{file_name}.parquet"
-    """Write DataFrame to local csv file"""
-    df.to_csv(local_path, index=False)
+    """Write DataFrame to local parquet file"""
+    df.to_parquet(local_path, compression="gzip")
+
+    # """Write DataFrame to local csv file"""
+    # df.to_csv(local_path, index=False)
     return
 
 @task(name="write GCS",log_prints=True)
@@ -42,8 +42,8 @@ def etl_web_to_gcs() -> None:
     file_name = f"{today}_berlin-bike-theft"
     
     local_prefix = Path(f"data/raw/daily")
-    local_path = f"{local_prefix}/{file_name}.csv"
-        
+    local_path = f"{local_prefix}/{file_name}.parquet"
+    
     # Get the file with the most recent date
     available_dates = [file.split('_')[0] for file in os.listdir(local_prefix)]
     most_recent_date = max(available_dates)

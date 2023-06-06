@@ -108,7 +108,7 @@ the data is visualized in a Google Data Looker ["Berlin Bike Theft Report"](http
   - to model the data from BigQuery run
   ```bash
   # cd to the dbt folder
-  cd bike_theft_berlin
+  cd berlin_bike_theft
   poetry run dbt run
   ```
 
