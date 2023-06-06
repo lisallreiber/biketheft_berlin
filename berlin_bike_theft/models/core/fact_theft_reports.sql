@@ -10,6 +10,7 @@ theft_reports_archived as (
     select *, 
         'archive' as source_type
     from {{ ref('stg_theft_reports_archived') }}
+    where DATE(crime_period_start_datetime) < '2022-01-01'
 ), 
 
 reports_unioned as (
