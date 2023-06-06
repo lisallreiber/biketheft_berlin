@@ -19,11 +19,13 @@ def extract_from_gsc(gcs_path: Path) -> Path:
 
 @task(name="Transform data from GSC",log_prints=True)
 def transform(data_path: Path) -> pd.DataFrame:
-    df = pd.read_csv(
-            data_path,
-            encoding='latin-1',
-            parse_dates=['ANGELEGT_AM', 'TATZEIT_ANFANG_DATUM', 'TATZEIT_ENDE_DATUM'],
-            dayfirst=True)
+    # df = pd.read_csv(
+    #         data_path,
+    #         encoding='latin-1',
+    #         parse_dates=['ANGELEGT_AM', 'TATZEIT_ANFANG_DATUM', 'TATZEIT_ENDE_DATUM'],
+    #         dayfirst=True)
+    df = pd.read_parquet(path = data_path)
+    
     print(f"columns: {df.dtypes}")
 
     """Fix dtype issues"""
@@ -71,7 +73,7 @@ def etl_gcs_to_bq(toggle_setup: bool):
         write_bq(mappings_df, "mapping_berlin_lor")
 
     date = pd.to_datetime('today').date()
-    daily_report_path = f"data/raw/daily/{date}_berlin-bike-theft.csv"
+    daily_report_path = f"data/raw/daily/{date}_berlin-bike-theft.parquet"
     
     gcs_path = extract_from_gsc(daily_report_path)
     reports_df = transform(gcs_path)
