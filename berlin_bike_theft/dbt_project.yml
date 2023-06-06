@@ -40,8 +40,8 @@ models:
       materialized: table
 
 seeds: 
-    berlin_bike_theft:
-        berlin_bezirke:
-            +column_types:
-                bez_id: numeric
-                bezirk_name: string
+  berlin_bike_theft:
+      berlin_bezirke:
+          +column_types:
+              bez_id: numeric
+              bezirk_name: string
