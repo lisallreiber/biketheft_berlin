@@ -1,5 +1,6 @@
 # local data file
 data/
+!data/mappings
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
