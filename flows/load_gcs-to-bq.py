@@ -24,7 +24,20 @@ def transform(data_path: Path) -> pd.DataFrame:
     #         encoding='latin-1',
     #         parse_dates=['ANGELEGT_AM', 'TATZEIT_ANFANG_DATUM', 'TATZEIT_ENDE_DATUM'],
     #         dayfirst=True)
-    df = pd.read_parquet(path = data_path)
+
+    # if path ends with csv, read csv, else if path ends with parquet, read parquet
+    print(data_path.suffix)
+    if data_path.suffix == ".csv":
+        df = pd.read_csv(
+            data_path,
+            encoding='latin-1',
+            parse_dates=['ANGELEGT_AM', 'TATZEIT_ANFANG_DATUM', 'TATZEIT_ENDE_DATUM'],
+            dayfirst=True)
+        
+    elif data_path.suffix == ".parquet":
+        df = pd.read_parquet(path = data_path)
+    else:
+        raise ValueError("Unsupported file format. Only CSV and Parquet files are supported.")
     
     print(f"columns: {df.dtypes}")
 
@@ -55,7 +68,7 @@ def write_bq(df: pd.DataFrame, table_name: str):
         destination_table=f"berlin_bike_theft.{table_name}",
         project_id="dtc-de-375708",
         credentials=gcp_credentials_block.get_credentials_from_service_account(),
-        if_exists="append"
+        if_exists="replace"
     )
 
 @flow(name="ETL GCS to BQ")
@@ -64,16 +77,17 @@ def etl_gcs_to_bq(toggle_setup: bool):
 
     if toggle_setup:
         # configure flow
-        archived_reports_path = f"data/raw/archive/2021_2022_Fahrraddiebstahl.csv"
+        archived_reports_path = Path("data/raw/archive/2021_2022_Fahrraddiebstahl.csv")
         archived_reports_df = transform(archived_reports_path)
         write_bq(archived_reports_df, "reported_incidents_archived")
-
+        
         mappings_path = Path("data/mappings/berlin_lor_geo.csv")
         mappings_df = pd.read_csv(mappings_path, sep=";")
         write_bq(mappings_df, "mapping_berlin_lor")
 
+
     date = pd.to_datetime('today').date()
-    daily_report_path = f"data/raw/daily/{date}_berlin-bike-theft.parquet"
+    daily_report_path = Path(f"data/raw/daily/{date}_berlin-bike-theft.parquet")
     
     gcs_path = extract_from_gsc(daily_report_path)
     reports_df = transform(gcs_path)
