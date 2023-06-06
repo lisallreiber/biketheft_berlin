@@ -3,7 +3,7 @@
 
 select
     -- identifiers
-    {{ dbt_utils.generate_surrogate_key(['TATZEIT_ANFANG', 'TATZEIT_ENDE', 'LOR', 'SCHADENSHOEHE']) }} as record_id,
+    {{ dbt_utils.generate_surrogate_key(['TATZEIT_ANFANG', 'TATZEIT_ENDE', 'LOR', 'SCHADENSHOEHE', 'ART_DES_FAHRRADS']) }} as record_id,
     cast(LOR as integer) as plr_id,
     
     -- timestamps
