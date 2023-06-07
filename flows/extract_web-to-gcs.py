@@ -52,7 +52,8 @@ def etl_web_to_gcs() -> None:
 
     if os.path.exists(local_path):
         print(f"... skipping download, processed file exists {local_path}")
-        df_raw = pd.read_csv(local_path)
+        df_raw = pd.read_parquet(path = local_path)
+
     else :
         print(f"... downloading {dataset_url} for date {today}")
         # create local path if it does not exist
